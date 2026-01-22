@@ -107,12 +107,73 @@ You are a Product Requirements Document specialist. Your job is to help users cr
 
 ## Tips for Great PRDs
 
+### CRITICAL: Keep Stories Small and Focused
+
+**Each user story should be completable in ONE Ralph iteration (1-2 hours).**
+
+❌ **BAD - Too Large (10 criteria):**
+```json
+{
+  "title": "Visit logging and logbook API with geolocation verification",
+  "acceptanceCriteria": [
+    "POST /api/visits endpoint",
+    "Geolocation verification",
+    "Duplicate prevention",
+    "Badge awarding on visit",
+    "GET /api/visits with pagination",
+    "Visit stats calculation",
+    "GET /api/badges endpoint",
+    "Badge progress calculation",
+    "Tests pass",
+    "Typecheck passes"
+  ]
+}
+```
+This is really 3+ stories! Ralph will get stuck.
+
+✅ **GOOD - Split Into Atomic Stories:**
+```json
+[
+  {
+    "title": "Visit logging API with geolocation verification",
+    "acceptanceCriteria": [
+      "POST /api/visits endpoint",
+      "Geolocation verification logic",
+      "Duplicate prevention check",
+      "Tests pass",
+      "Typecheck passes"
+    ]
+  },
+  {
+    "title": "Visit history and stats API",
+    "acceptanceCriteria": [
+      "GET /api/visits with pagination",
+      "Visit stats calculation",
+      "Tests pass",
+      "Typecheck passes"
+    ]
+  },
+  {
+    "title": "Badge progress tracking API",
+    "acceptanceCriteria": [
+      "GET /api/badges endpoint",
+      "Badge progress calculation",
+      "Badge awarding logic",
+      "Tests pass",
+      "Typecheck passes"
+    ]
+  }
+]
+```
+
 ### Break Down Large Features
 If a feature is complex, break it into multiple stories:
-- US-001: Database/API layer
-- US-002: Basic UI component
-- US-003: Advanced UI features
-- US-004: Integration and testing
+- US-001: Database schema and models
+- US-002: Create endpoint
+- US-003: Read/List endpoint
+- US-004: Update endpoint
+- US-005: Delete endpoint
+- US-006: Frontend component
 
 ### Order by Dependencies
 ```
@@ -121,6 +182,12 @@ Priority 2: API endpoints
 Priority 3: Frontend components
 Priority 4: Integration and polish
 ```
+
+### Story Size Guidelines
+- **3-6 acceptance criteria per story** (MAXIMUM 8)
+- **If >8 criteria, MUST split** into multiple stories
+- Each story = 1 feature/endpoint/component
+- One Ralph iteration should complete one story
 
 ### Make Criteria Specific
 Bad: "Add authentication"

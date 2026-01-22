@@ -108,6 +108,29 @@ Generate a comprehensive prd.json file with well-structured user stories.
 6. Set all "passes" to false initially
 7. Leave "notes" as empty strings
 
+## CRITICAL: Keep Stories Small and Focused
+
+**Each user story should be completable in ONE Ralph iteration (typically 1-2 hours of work).**
+
+❌ **BAD - Too Large:**
+- "Build complete authentication system with login, registration, password reset, email verification, and OAuth"
+- "Create admin panel with CRUD for all entities"
+- 10+ acceptance criteria in one story
+
+✅ **GOOD - Atomic and Focused:**
+- "Add user registration endpoint with email validation"
+- "Add JWT-based login endpoint"
+- "Add password reset request endpoint"
+- 3-6 acceptance criteria per story
+
+**If a feature requires multiple endpoints, data models, or subsystems, split it into separate stories.**
+
+Examples of when to split:
+- Multiple API endpoints → One story per endpoint (or logical group)
+- Frontend + Backend → Separate stories
+- Different user roles → Separate stories
+- Complex calculations + display → Separate stories
+
 ## Output Format
 
 Output ONLY the JSON, no other text. Format:
@@ -136,7 +159,13 @@ Output ONLY the JSON, no other text. Format:
 }
 \`\`\`
 
-Generate 3-8 user stories depending on complexity. Make acceptance criteria specific and testable.
+Generate 5-15 user stories depending on complexity. PREFER MORE SMALLER STORIES over fewer large ones.
+
+**Story Size Guidelines:**
+- 3-6 acceptance criteria per story (MAXIMUM 8)
+- If >8 criteria, MUST split into multiple stories
+- Each story = 1 feature/endpoint/component
+- Make acceptance criteria specific and testable
 EOF
 
     print_info "Generating PRD with Claude..."

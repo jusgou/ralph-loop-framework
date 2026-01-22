@@ -23,7 +23,8 @@ ralph-prd-generator    # Auto-detects .ralph/ and creates .ralph/prd.json
 
 # OR
 
-# 4b. For plan/build mode: Create specs/, then run
+# 4b. For plan/build mode: Generate specs, then run
+ralph-specs-generator     # Interactive specs creation
 .ralph/loop.sh plan       # Planning phase
 .ralph/loop.sh 20         # Build phase
 ```
@@ -58,6 +59,9 @@ ralph-scaffold plan-build /path/to/project
 # Generate PRD interactively (NEW!)
 ralph-prd-generator                # Auto-detects .ralph/, creates .ralph/prd.json
 ralph-prd-generator my-prd.json    # Custom output file
+
+# Generate specifications interactively (NEW!)
+ralph-specs-generator              # Auto-creates specs/*.md
 
 # Monitor Ralph progress (NEW!)
 ralph-status                       # One-shot status view
@@ -159,6 +163,49 @@ Claude will then generate a complete `prd.json` with:
 - **List constraints**: "Must work with existing Tailwind config"
 - **Think about the user**: What are you building and why?
 
+## Specs Generator (The Easy Button for Plan/Build!)
+
+The specs generator makes it easy to create comprehensive specifications for the plan/build workflow.
+
+### Interactive Mode (Recommended)
+```bash
+ralph-specs-generator
+```
+
+You'll be asked:
+- Project name and feature/module name
+- Problem statement and desired outcome
+- Tech stack
+- List of components/features
+- Technical requirements and constraints
+- Edge cases and special scenarios
+
+Claude will then generate comprehensive specification files in `specs/` covering:
+- Overview and goals
+- User stories/use cases
+- Technical requirements
+- Data models and API contracts
+- UI/UX specifications (if applicable)
+- Edge cases and error handling
+- Testing strategy
+
+### What You Get
+
+Multiple markdown files in `specs/` directory:
+- `overview.md` - High-level architecture and goals
+- `api.md` - API specifications and endpoints
+- `data-models.md` - Database schema and data structures
+- `ui.md` - Frontend/UI specifications (if applicable)
+
+Or a single comprehensive spec file if the feature is smaller.
+
+### Tips for Good Specs Generation
+
+- **Be specific about components**: "REST API for user management" not "backend"
+- **Mention technical constraints**: "Must handle 1000 req/sec", "Offline-first"
+- **List edge cases**: "What happens if network fails?", "How to handle duplicates?"
+- **Think about data**: What needs to be stored? What's the schema?
+
 ## Common Workflows
 
 ### Workflow 1: New Feature (Snarktank with PRD Generator)
@@ -182,13 +229,32 @@ ralph-scaffold snarktank .
 .ralph/ralph.sh --tool claude 15
 ```
 
-### Workflow 2: Complex Project (Plan/Build)
+### Workflow 2: Complex Project (Plan/Build with Specs Generator)
+```bash
+ralph-scaffold plan-build .
+ralph-specs-generator    # Interactive specs creation (creates specs/*.md)
+# Edit .ralph/AGENTS.md with project info
+
+# Run planning phase in one terminal
+.ralph/loop.sh plan
+
+# Review .ralph/@IMPLEMENTATION_PLAN.md
+cat .ralph/@IMPLEMENTATION_PLAN.md
+
+# Run build phase
+.ralph/loop.sh 30
+
+# Monitor in another terminal (recommended!)
+ralph-status --watch
+```
+
+### Workflow 2b: Complex Project (Manual Specs)
 ```bash
 ralph-scaffold plan-build .
 mkdir specs
 # Write specs/*.md files
 # Update .ralph/PROMPT_plan.md with goal
-.ralph/loop.sh plan 5
+.ralph/loop.sh plan
 # Review .ralph/@IMPLEMENTATION_PLAN.md
 .ralph/loop.sh 30
 ```

@@ -65,6 +65,75 @@ ralph-prd-generator my-feature.json
 
 ---
 
+### ralph-specs-generator (NEW!)
+Interactively generate comprehensive specification documents for plan/build mode.
+
+```bash
+# Generate specs/*.md in current directory
+ralph-specs-generator
+```
+
+**What it does:**
+- Asks questions about your project/feature
+- Collects requirements and technical constraints
+- Generates comprehensive specification documents
+- Creates multiple .md files in specs/ directory
+- Ready for use with plan/build workflow
+
+**Questions asked:**
+1. Project name and feature/module name
+2. Problem statement
+3. Desired outcome
+4. Tech stack
+5. List of components/features
+6. Technical requirements/constraints
+7. Edge cases and special scenarios
+
+**Output:**
+- Multiple markdown files in `specs/` directory:
+  - `overview.md` - High-level architecture and goals
+  - `api.md` - API specifications (if applicable)
+  - `data-models.md` - Database schema (if applicable)
+  - `ui.md` - Frontend specifications (if applicable)
+- Or single comprehensive spec file for smaller features
+- Covers: goals, user stories, technical requirements, data models, API endpoints, edge cases, testing strategy
+
+---
+
+### ralph-status (NEW!)
+Monitor Ralph's progress in real-time with a comprehensive dashboard.
+
+```bash
+# One-shot status view
+ralph-status
+
+# Auto-refresh every 2 seconds (recommended)
+ralph-status --watch
+
+# Auto-refresh with custom interval (5 seconds)
+ralph-status --watch 5
+```
+
+**What it shows:**
+- Current task being worked on
+- Progress bar with completion percentage
+- Full task list with status indicators (✓ completed, ▶ in progress, ○ pending)
+- Activity monitoring (last commit, last file modified)
+- Process status (Ralph and Claude PIDs, CPU, memory)
+- Warning if no activity detected (stuck detection)
+
+**Works with both modes:**
+- Auto-detects snarktank mode (reads .ralph/prd.json)
+- Auto-detects plan/build mode (reads .ralph/@IMPLEMENTATION_PLAN.md)
+
+**Use when:**
+- Ralph runs in `--print` mode (which is silent by design)
+- You want to see what Ralph is working on
+- You need to detect if Ralph is stuck
+- You want real-time progress updates
+
+---
+
 ### ralph-prd-agent
 Launch an interactive Claude session for PRD generation.
 
@@ -184,7 +253,9 @@ Located at `~/.ralph-templates/`
 
 - `ralph-scaffold` - Project scaffolder
 - `ralph-prd-generator` - Interactive PRD generator
+- `ralph-specs-generator` - Interactive specs generator
 - `ralph-prd-agent` - Conversational PRD generator
+- `ralph-status` - Monitoring dashboard
 - `PRD_GENERATOR_PROMPT.md` - Agent prompt for PRD generation
 
 ### Documentation
@@ -204,14 +275,17 @@ Located at `~/.ralph-templates/`
 cd /path/to/project
 ralph-scaffold snarktank .
 
-# 2. Generate PRD interactively
+# 2. Generate PRD interactively (RECOMMENDED)
 ralph-prd-generator
 
 # 3. Update project guide
-vim AGENTS.md  # Add how to run tests, build, etc.
+vim .ralph/AGENTS.md  # Add how to run tests, build, etc.
 
-# 4. Run Ralph
-./ralph.sh --tool claude 15
+# 4. Run Ralph (in one terminal)
+.ralph/ralph.sh --tool claude 15
+
+# 5. Monitor progress (in another terminal)
+ralph-status --watch
 ```
 
 ### Workflow 2: Complex Project with Plan/Build
@@ -221,24 +295,30 @@ vim AGENTS.md  # Add how to run tests, build, etc.
 cd /path/to/project
 ralph-scaffold plan-build .
 
-# 2. Create specifications
-mkdir specs
-cat > specs/feature.md <<EOF
-# Feature Specification
-[Description of what you're building]
-EOF
+# 2. Generate specifications interactively (RECOMMENDED)
+ralph-specs-generator
 
-# 3. Update planning prompt with goal
-vim PROMPT_plan.md  # Set your PROJECT_GOAL
+# OR manually create specifications
+# mkdir specs
+# cat > specs/feature.md <<EOF
+# # Feature Specification
+# [Description of what you're building]
+# EOF
+
+# 3. Update project guide
+vim .ralph/AGENTS.md  # Add how to run tests, build, etc.
 
 # 4. Run planning
-./loop.sh plan
+.ralph/loop.sh plan
 
 # 5. Review plan
-cat @IMPLEMENTATION_PLAN.md
+cat .ralph/@IMPLEMENTATION_PLAN.md
 
 # 6. Run build
-./loop.sh 30
+.ralph/loop.sh 30
+
+# 7. Monitor progress (in another terminal)
+ralph-status --watch
 ```
 
 ### Workflow 3: Hybrid Approach
@@ -248,13 +328,16 @@ cat @IMPLEMENTATION_PLAN.md
 ralph-scaffold both .
 
 # 2. Start with planning
-mkdir specs && echo "# Spec" > specs/feature.md
-./loop.sh plan 3
-cat @IMPLEMENTATION_PLAN.md
+ralph-specs-generator
+.ralph/loop.sh plan
+cat .ralph/@IMPLEMENTATION_PLAN.md
 
 # 3. Switch to snarktank for implementation
 ralph-prd-generator  # Convert plan to user stories
-./ralph.sh --tool claude 20
+.ralph/ralph.sh --tool claude 20
+
+# 4. Monitor progress (in another terminal)
+ralph-status --watch
 ```
 
 ### Workflow 4: In-Session with Plugin
@@ -364,12 +447,14 @@ ls -la ~/.ralph-templates/
 
 ## Tips
 
-1. **Always update AGENTS.md** - Future iterations depend on it
-2. **Use ralph-prd-generator** - Saves hours of PRD writing
-3. **Start small** - Test with 5-10 iterations first
-4. **Review commits** - Ralph auto-commits, check git log
-5. **Tune prompts** - Edit CLAUDE.md or PROMPT_*.md if Ralph goes wrong
-6. **Set completion promises** - Prevent infinite loops
+1. **Always update .ralph/AGENTS.md** - Future iterations depend on it
+2. **Use ralph-prd-generator** - Saves hours of PRD writing (snarktank mode)
+3. **Use ralph-specs-generator** - Saves hours of spec writing (plan/build mode)
+4. **Use ralph-status --watch** - Monitor progress in real-time
+5. **Start small** - Test with 5-10 iterations first
+6. **Review commits** - Ralph auto-commits, check git log
+7. **Tune prompts** - Edit .ralph/CLAUDE.md or .ralph/PROMPT_*.md if Ralph goes wrong
+8. **Set completion promises** - Prevent infinite loops
 
 ---
 

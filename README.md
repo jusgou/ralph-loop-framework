@@ -4,19 +4,36 @@ A hybrid framework supporting two Ralph Loop methodologies for autonomous AI dev
 
 ## Quick Start
 
+### Snarktank Mode (PRD-based)
 ```bash
-# Add to PATH (already done if you installed)
-export PATH="$HOME/.ralph-templates:$PATH"
-
 # Scaffold a new project
 cd /path/to/project
 ralph-scaffold both .
 
-# Generate PRD
+# Generate PRD interactively
 ralph-prd-generator
 
 # Run Ralph
 .ralph/ralph.sh --tool claude 15
+
+# Monitor progress (in another terminal)
+ralph-status --watch
+```
+
+### Plan/Build Mode
+```bash
+# Scaffold a new project
+cd /path/to/project
+ralph-scaffold both .
+
+# Generate specifications interactively
+ralph-specs-generator
+
+# Run planning phase
+.ralph/loop.sh plan
+
+# Run build phase
+.ralph/loop.sh 20
 
 # Monitor progress (in another terminal)
 ralph-status --watch
@@ -42,6 +59,20 @@ ralph-prd-generator my.json   # Custom path
 ```
 
 Asks you questions and generates well-structured user stories with testable acceptance criteria.
+
+### ralph-specs-generator (THE EASY BUTTON FOR PLAN/BUILD!)
+Interactively generate comprehensive specification documents.
+
+```bash
+ralph-specs-generator         # Auto-creates specs/*.md
+```
+
+Asks you questions and generates detailed specifications for the plan/build workflow. Creates structured markdown files covering:
+- Overview and goals
+- Technical requirements
+- Data models and API specs
+- UI/UX specifications
+- Edge cases and testing strategy
 
 ### ralph-status (MONITORING DASHBOARD)
 Monitor Ralph's progress in real-time.
@@ -104,9 +135,12 @@ ralph-status --watch
 
 **Workflow**:
 ```bash
-# 1. Create specs/ directory with specifications
-mkdir -p specs
-echo "# Feature Spec" > specs/feature.md
+# 1. Generate specifications interactively (RECOMMENDED)
+ralph-specs-generator    # Auto-creates specs/*.md
+
+# OR manually create specs/ directory with specifications
+# mkdir -p specs
+# echo "# Feature Spec" > specs/feature.md
 
 # 2. Run planning mode
 .ralph/loop.sh plan

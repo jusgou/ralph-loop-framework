@@ -1,17 +1,17 @@
 #!/bin/bash
-# Ralph PRD Generator - Interactive PRD creation
-# Usage: ralph-prd-generator [output_file]
+# Nelson PRD Generator - Interactive PRD creation
+# Usage: nelson-prd-generator [output_file]
 
 set -e
 
-# Default to .ralph/prd.json if .ralph directory exists, otherwise prd.json
+# Default to .nelson/prd.json if .ralph directory exists, otherwise prd.json
 if [ -d ".ralph" ] && [ -z "$1" ]; then
-    OUTPUT_FILE=".ralph/prd.json"
+    OUTPUT_FILE=".nelson/prd.json"
 else
     OUTPUT_FILE="${1:-prd.json}"
 fi
 
-TEMP_INPUT="/tmp/ralph-prd-input-$$.md"
+TEMP_INPUT="/tmp/nelson-prd-input-$$.md"
 
 # Colors
 GREEN='\033[0;32m'
@@ -21,7 +21,7 @@ NC='\033[0m'
 
 print_header() {
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║${NC}  Ralph PRD Generator - Build User Stories Interactively ${BLUE}║${NC}"
+    echo -e "${BLUE}║${NC}  Nelson PRD Generator - Build User Stories Interactively ${BLUE}║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -43,7 +43,7 @@ gather_input() {
 
     # Project basics
     read -p "Project name: " PROJECT_NAME
-    read -p "Branch name (e.g., ralph/feature-name): " BRANCH_NAME
+    read -p "Branch name (e.g., nelson/feature-name): " BRANCH_NAME
 
     echo ""
     echo "Describe the feature/project in 1-2 sentences:"
@@ -110,7 +110,7 @@ Generate a comprehensive prd.json file with well-structured user stories.
 
 ## CRITICAL: Keep Stories Small and Focused
 
-**Each user story should be completable in ONE Ralph iteration (typically 1-2 hours of work).**
+**Each user story should be completable in ONE Nelson iteration (typically 1-2 hours of work).**
 
 ❌ **BAD - Too Large:**
 - "Build complete authentication system with login, registration, password reset, email verification, and OAuth"
@@ -202,7 +202,7 @@ generate_prd() {
         print_success "Next steps:"
         echo "  1. Review and edit $OUTPUT_FILE if needed"
         echo "  2. Update AGENTS.md with project-specific info"
-        echo "  3. Run: ./ralph.sh --tool claude 10"
+        echo "  3. Run: ./nelson.sh --tool claude 10"
     else
         echo "Error: Failed to generate valid JSON"
         echo "Claude output was:"
@@ -245,4 +245,4 @@ fi
 gather_input
 generate_prd
 
-print_success "Done! Happy Ralph-ing!"
+print_success "Done! Happy Nelson-ing!"

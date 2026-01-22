@@ -1,10 +1,10 @@
 #!/bin/bash
-# Ralph PRD Agent - Launch interactive PRD generation agent
-# Usage: ralph-prd-agent
+# Nelson PRD Agent - Launch interactive PRD generation agent
+# Usage: nelson-prd-agent
 
 set -e
 
-TEMPLATES_DIR="$HOME/.ralph-templates"
+TEMPLATES_DIR="$HOME/.nelson-template"
 PROMPT_FILE="$TEMPLATES_DIR/PRD_GENERATOR_PROMPT.md"
 
 # Colors
@@ -14,7 +14,7 @@ NC='\033[0m'
 
 print_header() {
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║${NC}  Ralph PRD Agent - Interactive Story Builder          ${BLUE}║${NC}"
+    echo -e "${BLUE}║${NC}  Nelson PRD Agent - Interactive Story Builder          ${BLUE}║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -44,10 +44,10 @@ else
     echo ""
 
     # Create a temporary session file
-    TEMP_SESSION="/tmp/ralph-prd-session-$$.md"
+    TEMP_SESSION="/tmp/nelson-prd-session-$$.md"
 
     cat > "$TEMP_SESSION" <<'EOF'
-I want to create a prd.json file for a Ralph Loop project.
+I want to create a prd.json file for a Nelson Loop project.
 
 Please help me by:
 1. Asking questions about my project

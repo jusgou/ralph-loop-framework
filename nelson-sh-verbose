@@ -1,11 +1,11 @@
 #!/bin/bash
-# Ralph Wiggum - Long-running AI agent loop
-# Usage: ./ralph.sh [--tool amp|claude] [max_iterations]
+# Nelson Wiggum - Long-running AI agent loop (VERBOSE VERSION)
+# Usage: ./nelson-sh-verbose [--tool amp|claude] [max_iterations]
 
 set -e
 
 # Parse arguments
-TOOL="claude"  # Default to claude
+TOOL="claude"
 MAX_ITERATIONS=10
 
 while [[ $# -gt 0 ]]; do
@@ -19,7 +19,6 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     *)
-      # Assume it's max_iterations if it's a number
       if [[ "$1" =~ ^[0-9]+$ ]]; then
         MAX_ITERATIONS="$1"
       fi
@@ -39,6 +38,7 @@ PRD_FILE="$SCRIPT_DIR/prd.json"
 PROGRESS_FILE="$SCRIPT_DIR/progress.txt"
 ARCHIVE_DIR="$SCRIPT_DIR/archive"
 LAST_BRANCH_FILE="$SCRIPT_DIR/.last-branch"
+OUTPUT_LOG="/tmp/nelson-output-$$.log"
 
 # Archive previous run if branch changed
 if [ -f "$PRD_FILE" ] && [ -f "$LAST_BRANCH_FILE" ]; then
@@ -46,10 +46,8 @@ if [ -f "$PRD_FILE" ] && [ -f "$LAST_BRANCH_FILE" ]; then
   LAST_BRANCH=$(cat "$LAST_BRANCH_FILE" 2>/dev/null || echo "")
 
   if [ -n "$CURRENT_BRANCH" ] && [ -n "$LAST_BRANCH" ] && [ "$CURRENT_BRANCH" != "$LAST_BRANCH" ]; then
-    # Archive the previous run
     DATE=$(date +%Y-%m-%d)
-    # Strip "ralph/" prefix from branch name for folder
-    FOLDER_NAME=$(echo "$LAST_BRANCH" | sed 's|^ralph/||')
+    FOLDER_NAME=$(echo "$LAST_BRANCH" | sed 's|^nelson/||')
     ARCHIVE_FOLDER="$ARCHIVE_DIR/$DATE-$FOLDER_NAME"
 
     echo "Archiving previous run: $LAST_BRANCH"
@@ -58,8 +56,7 @@ if [ -f "$PRD_FILE" ] && [ -f "$LAST_BRANCH_FILE" ]; then
     [ -f "$PROGRESS_FILE" ] && cp "$PROGRESS_FILE" "$ARCHIVE_FOLDER/"
     echo "   Archived to: $ARCHIVE_FOLDER"
 
-    # Reset progress file for new run
-    echo "# Ralph Progress Log" > "$PROGRESS_FILE"
+    echo "# Nelson Progress Log" > "$PROGRESS_FILE"
     echo "Started: $(date)" >> "$PROGRESS_FILE"
     echo "---" >> "$PROGRESS_FILE"
   fi
@@ -73,42 +70,49 @@ if [ -f "$PRD_FILE" ]; then
   fi
 fi
 
-# Initialize progress file if it doesn't exist
+# Initialize progress file
 if [ ! -f "$PROGRESS_FILE" ]; then
-  echo "# Ralph Progress Log" > "$PROGRESS_FILE"
+  echo "# Nelson Progress Log" > "$PROGRESS_FILE"
   echo "Started: $(date)" >> "$PROGRESS_FILE"
   echo "---" >> "$PROGRESS_FILE"
 fi
 
-echo "Starting Ralph - Tool: $TOOL - Max iterations: $MAX_ITERATIONS"
+echo "Starting Nelson - Tool: $TOOL - Max iterations: $MAX_ITERATIONS"
+echo "Output log: $OUTPUT_LOG"
 
 for i in $(seq 1 $MAX_ITERATIONS); do
   echo ""
   echo "==============================================================="
-  echo "  Ralph Iteration $i of $MAX_ITERATIONS ($TOOL)"
+  echo "  Nelson Iteration $i of $MAX_ITERATIONS ($TOOL)"
   echo "==============================================================="
+  echo ""
 
-  # Run the selected tool with the ralph prompt
+  # Run with visible output
   if [[ "$TOOL" == "amp" ]]; then
-    OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | amp --dangerously-allow-all 2>&1 | tee /dev/stderr) || true
+    cat "$SCRIPT_DIR/prompt.md" | amp --dangerously-allow-all 2>&1 | tee "$OUTPUT_LOG"
+    RESULT=$?
   else
-    # Claude Code: use --dangerously-skip-permissions for autonomous operation, --print for output
-    OUTPUT=$(claude --dangerously-skip-permissions --print < "$SCRIPT_DIR/CLAUDE.md" 2>&1 | tee /dev/stderr) || true
+    # Claude Code: run WITHOUT --print to see real-time output
+    cat "$SCRIPT_DIR/CLAUDE.md" | claude --dangerously-skip-permissions 2>&1 | tee "$OUTPUT_LOG"
+    RESULT=$?
   fi
 
-  # Check for completion signal
-  if echo "$OUTPUT" | grep -q "<promise>COMPLETE</promise>"; then
+  # Check for completion signal in the output
+  if grep -q "<promise>COMPLETE</promise>" "$OUTPUT_LOG"; then
     echo ""
-    echo "Ralph completed all tasks!"
+    echo "Nelson completed all tasks!"
     echo "Completed at iteration $i of $MAX_ITERATIONS"
+    rm -f "$OUTPUT_LOG"
     exit 0
   fi
 
+  echo ""
   echo "Iteration $i complete. Continuing..."
   sleep 2
 done
 
 echo ""
-echo "Ralph reached max iterations ($MAX_ITERATIONS) without completing all tasks."
+echo "Nelson reached max iterations ($MAX_ITERATIONS) without completing all tasks."
 echo "Check $PROGRESS_FILE for status."
+rm -f "$OUTPUT_LOG"
 exit 1

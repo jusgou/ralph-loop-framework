@@ -1,0 +1,1 @@
+/home/rabbit/.nelson-template/nelson-status

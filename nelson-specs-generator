@@ -1,12 +1,12 @@
 #!/bin/bash
-# Ralph Specs Generator - Interactive specifications builder
-# Usage: ralph-specs-generator
+# Nelson Specs Generator - Interactive specifications builder
+# Usage: nelson-specs-generator
 
 set -e
 
 # Default to specs/ directory
 SPECS_DIR="specs"
-TEMP_INPUT="/tmp/ralph-specs-input-$$.md"
+TEMP_INPUT="/tmp/nelson-specs-input-$$.md"
 
 # Colors
 GREEN='\033[0;32m'
@@ -16,7 +16,7 @@ NC='\033[0m'
 
 print_header() {
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║${NC}  Ralph Specs Generator - Build Specifications           ${BLUE}║${NC}"
+    echo -e "${BLUE}║${NC}  Nelson Specs Generator - Build Specifications           ${BLUE}║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -166,7 +166,7 @@ Output markdown specifications. For each spec file, use this format:
 
 **If multiple files are needed**, output them separately with clear filenames.
 
-Generate comprehensive, actionable specifications that Ralph can use to plan and build the feature.
+Generate comprehensive, actionable specifications that Nelson can use to plan and build the feature.
 EOF
 
     print_info "Generating specifications with Claude..."
@@ -245,11 +245,11 @@ generate_specs() {
 
     print_success "Next steps:"
     echo "  1. Review and edit specs in $SPECS_DIR/ if needed"
-    echo "  2. Update .ralph/AGENTS.md with project-specific info"
-    echo "  3. Run planning phase: .ralph/loop.sh plan"
-    echo "  4. Review .ralph/@IMPLEMENTATION_PLAN.md"
-    echo "  5. Run build phase: .ralph/loop.sh 20"
-    echo "  6. Monitor progress: ralph-status --watch"
+    echo "  2. Update .nelson/AGENTS.md with project-specific info"
+    echo "  3. Run planning phase: .nelson/loop.sh plan"
+    echo "  4. Review .nelson/@IMPLEMENTATION_PLAN.md"
+    echo "  5. Run build phase: .nelson/loop.sh 20"
+    echo "  6. Monitor progress: nelson-status --watch"
 
     # Cleanup
     rm -f "$TEMP_INPUT"

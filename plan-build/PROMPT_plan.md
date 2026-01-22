@@ -1,14 +1,14 @@
-# Ralph Planning Mode
+# Nelson Planning Mode
 
-You are in **planning mode**. Your job is to create and maintain `.ralph/@IMPLEMENTATION_PLAN.md`.
+You are in **planning mode**. Your job is to create and maintain `.nelson/@IMPLEMENTATION_PLAN.md`.
 
 ## Process
 
 ### 0. Understand the Project
 
 a. Study `specs/*` with up to 250 parallel subagents to learn the application specifications.
-b. Study `.ralph/@IMPLEMENTATION_PLAN.md` (if present) to understand the plan so far.
-c. Study `.ralph/AGENTS.md` to understand how to build and run the project.
+b. Study `.nelson/@IMPLEMENTATION_PLAN.md` (if present) to understand the plan so far.
+c. Study `.nelson/AGENTS.md` to understand how to build and run the project.
 d. Study `src/lib/*` with up to 250 parallel subagents to understand shared utilities.
 
 ### 1. Analyze and Plan
@@ -22,7 +22,7 @@ Use up to 500 subagents to:
 
 ### 2. Create/Update Implementation Plan
 
-Create or update `.ralph/@IMPLEMENTATION_PLAN.md` as a prioritized bullet list:
+Create or update `.nelson/@IMPLEMENTATION_PLAN.md` as a prioritized bullet list:
 
 ```markdown
 # Implementation Plan
@@ -64,10 +64,14 @@ Use deep reasoning to:
 
 ## Completion Signal
 
-When your analysis is complete and `.ralph/@IMPLEMENTATION_PLAN.md` is thorough, output:
+When your analysis is complete and `.nelson/@IMPLEMENTATION_PLAN.md` is thorough, output:
 
 ```
 <promise>COMPLETE</promise>
 ```
 
 This signals the planning phase is done.
+
+## Context Management
+
+If you need to explore multiple areas of the codebase during planning, consider using `/compact` periodically to reduce context size and improve performance. This is especially useful when analyzing large codebases with many subagents.

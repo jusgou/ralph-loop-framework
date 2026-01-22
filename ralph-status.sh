@@ -1,1 +1,0 @@
-/home/rabbit/.ralph-templates/ralph-status

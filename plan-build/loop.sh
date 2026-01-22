@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ralph Loop - Plan/Build Mode
+# Nelson Loop - Plan/Build Mode
 # Usage: ./loop.sh [plan] [max_iterations]
 
 if [ "$1" = "plan" ]; then
@@ -20,7 +20,7 @@ ITERATION=0
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
 
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║  Ralph Loop - $MODE Mode                                    "
+echo "║  Nelson Loop - $MODE Mode                                    "
 echo "║  Prompt: $PROMPT_FILE"
 echo "║  Branch: $CURRENT_BRANCH"
 echo "║  Max Iterations: $MAX_ITERATIONS"
@@ -42,7 +42,7 @@ while true; do
     if echo "$OUTPUT" | grep -q "<promise>COMPLETE</promise>"; then
         echo ""
         echo "╔════════════════════════════════════════════════════════════╗"
-        echo "║  Ralph completed successfully!"
+        echo "║  Nelson completed successfully!"
         echo "║  Completed at iteration $((ITERATION + 1)) of $MAX_ITERATIONS"
         echo "╚════════════════════════════════════════════════════════════╝"
         exit 0
@@ -61,7 +61,7 @@ done
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║  Ralph reached max iterations ($MAX_ITERATIONS)"
+echo "║  Nelson reached max iterations ($MAX_ITERATIONS)"
 echo "║  Check @IMPLEMENTATION_PLAN.md for status"
 echo "╚════════════════════════════════════════════════════════════╝"
 exit 1

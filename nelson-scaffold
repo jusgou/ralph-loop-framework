@@ -1,10 +1,10 @@
 #!/bin/bash
-# Ralph Scaffold - Set up Ralph Loop framework in a project
-# Usage: ralph-scaffold [snarktank|plan-build|both] [target_directory]
+# Nelson Scaffold - Set up Nelson Loop framework in a project
+# Usage: nelson-scaffold [toro|plan-build|both] [target_directory]
 
 set -e
 
-TEMPLATES_DIR="$HOME/.ralph-templates"
+TEMPLATES_DIR="$HOME/.nelson-template"
 MODE="${1:-both}"
 TARGET_DIR="${2:-.}"
 
@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 
 print_header() {
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║${NC}  Ralph Scaffold - Initialize Ralph Loop Framework     ${BLUE}║${NC}"
+    echo -e "${BLUE}║${NC}  Nelson Scaffold - Initialize Nelson Loop Framework     ${BLUE}║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -33,40 +33,40 @@ print_warning() {
     echo -e "${YELLOW}!${NC} $1"
 }
 
-scaffold_snarktank() {
+scaffold_toro() {
     local target="$1"
-    local ralph_dir="$target/.ralph"
+    local nelson_dir="$target/.ralph"
 
-    print_info "Setting up snarktank/ralph mode..."
+    print_info "Setting up toro/ralph mode..."
 
     # Create .ralph directory
-    mkdir -p "$ralph_dir"
+    mkdir -p "$nelson_dir"
 
     # Copy templates
-    cp "$TEMPLATES_DIR/snarktank/ralph.sh" "$ralph_dir/"
-    cp "$TEMPLATES_DIR/snarktank/CLAUDE.md" "$ralph_dir/"
-    cp "$TEMPLATES_DIR/snarktank/prd.json.example" "$ralph_dir/"
+    cp "$TEMPLATES_DIR/toro/nelson.sh" "$nelson_dir/"
+    cp "$TEMPLATES_DIR/toro/CLAUDE.md" "$nelson_dir/"
+    cp "$TEMPLATES_DIR/toro/prd.json.example" "$nelson_dir/"
 
     # Make executable
-    chmod +x "$ralph_dir/ralph.sh"
+    chmod +x "$nelson_dir/nelson.sh"
 
     # Create initial files
-    if [ ! -f "$ralph_dir/prd.json" ]; then
+    if [ ! -f "$nelson_dir/prd.json" ]; then
         print_info "Creating initial prd.json..."
-        cat > "$ralph_dir/prd.json" <<'EOF'
+        cat > "$nelson_dir/prd.json" <<'EOF'
 {
   "project": "PROJECT_NAME",
-  "branchName": "ralph/initial",
-  "description": "Initial Ralph setup",
+  "branchName": "nelson/initial",
+  "description": "Initial Nelson setup",
   "userStories": [
     {
       "id": "US-001",
       "title": "Setup complete",
-      "description": "As a developer, I want to verify Ralph is configured correctly.",
+      "description": "As a developer, I want to verify Nelson is configured correctly.",
       "acceptanceCriteria": [
-        ".ralph/ralph.sh is executable",
-        ".ralph/CLAUDE.md exists",
-        ".ralph/prd.json is valid JSON"
+        ".nelson/nelson.sh is executable",
+        ".nelson/CLAUDE.md exists",
+        ".nelson/prd.json is valid JSON"
       ],
       "priority": 1,
       "passes": false,
@@ -77,15 +77,15 @@ scaffold_snarktank() {
 EOF
     fi
 
-    if [ ! -f "$ralph_dir/progress.txt" ]; then
-        echo "# Ralph Progress Log" > "$ralph_dir/progress.txt"
-        echo "Started: $(date)" >> "$ralph_dir/progress.txt"
-        echo "---" >> "$ralph_dir/progress.txt"
+    if [ ! -f "$nelson_dir/progress.txt" ]; then
+        echo "# Nelson Progress Log" > "$nelson_dir/progress.txt"
+        echo "Started: $(date)" >> "$nelson_dir/progress.txt"
+        echo "---" >> "$nelson_dir/progress.txt"
     fi
 
-    print_success "Snarktank mode configured"
-    print_info "Files created in .ralph/:"
-    echo "  - ralph.sh (executable loop script)"
+    print_success "Toro mode configured"
+    print_info "Files created in .nelson/:"
+    echo "  - nelson.sh (executable loop script)"
     echo "  - CLAUDE.md (instructions for Claude)"
     echo "  - prd.json (user stories)"
     echo "  - prd.json.example (reference)"
@@ -94,25 +94,25 @@ EOF
 
 scaffold_plan_build() {
     local target="$1"
-    local ralph_dir="$target/.ralph"
+    local nelson_dir="$target/.ralph"
 
     print_info "Setting up plan/build mode..."
 
     # Create .ralph directory
-    mkdir -p "$ralph_dir"
+    mkdir -p "$nelson_dir"
 
     # Copy templates
-    cp "$TEMPLATES_DIR/plan-build/loop.sh" "$ralph_dir/"
-    cp "$TEMPLATES_DIR/plan-build/PROMPT_plan.md" "$ralph_dir/"
-    cp "$TEMPLATES_DIR/plan-build/PROMPT_build.md" "$ralph_dir/"
+    cp "$TEMPLATES_DIR/plan-build/loop.sh" "$nelson_dir/"
+    cp "$TEMPLATES_DIR/plan-build/PROMPT_plan.md" "$nelson_dir/"
+    cp "$TEMPLATES_DIR/plan-build/PROMPT_build.md" "$nelson_dir/"
 
     # Make executable
-    chmod +x "$ralph_dir/loop.sh"
+    chmod +x "$nelson_dir/loop.sh"
 
     # Create initial implementation plan if it doesn't exist
-    if [ ! -f "$ralph_dir/@IMPLEMENTATION_PLAN.md" ]; then
+    if [ ! -f "$nelson_dir/@IMPLEMENTATION_PLAN.md" ]; then
         print_info "Creating initial @IMPLEMENTATION_PLAN.md..."
-        cat > "$ralph_dir/@IMPLEMENTATION_PLAN.md" <<'EOF'
+        cat > "$nelson_dir/@IMPLEMENTATION_PLAN.md" <<'EOF'
 # Implementation Plan
 
 ## High Priority
@@ -126,12 +126,12 @@ scaffold_plan_build() {
 - [ ] Documentation improvements
 
 ## Completed
-- [x] Ralph framework scaffolded
+- [x] Nelson framework scaffolded
 EOF
     fi
 
     print_success "Plan/build mode configured"
-    print_info "Files created in .ralph/:"
+    print_info "Files created in .nelson/:"
     echo "  - loop.sh (executable loop script)"
     echo "  - PROMPT_plan.md (planning mode instructions)"
     echo "  - PROMPT_build.md (build mode instructions)"
@@ -140,16 +140,16 @@ EOF
 
 scaffold_agents_md() {
     local target="$1"
-    local ralph_dir="$target/.ralph"
+    local nelson_dir="$target/.ralph"
 
-    mkdir -p "$ralph_dir"
+    mkdir -p "$nelson_dir"
 
-    if [ ! -f "$ralph_dir/AGENTS.md" ]; then
+    if [ ! -f "$nelson_dir/AGENTS.md" ]; then
         print_info "Creating AGENTS.md..."
-        cp "$TEMPLATES_DIR/shared/AGENTS.md" "$ralph_dir/"
-        print_success "AGENTS.md created in .ralph/"
+        cp "$TEMPLATES_DIR/shared/AGENTS.md" "$nelson_dir/"
+        print_success "AGENTS.md created in .nelson/"
     else
-        print_warning "AGENTS.md already exists in .ralph/, skipping"
+        print_warning "AGENTS.md already exists in .nelson/, skipping"
     fi
 }
 
@@ -157,26 +157,26 @@ create_gitignore_entries() {
     local target="$1"
     local gitignore="$target/.gitignore"
 
-    # Add Ralph-specific ignores if not already present
+    # Add Nelson-specific ignores if not already present
     if [ -f "$gitignore" ]; then
-        if ! grep -q "# Ralph Loop" "$gitignore"; then
-            print_info "Adding Ralph entries to .gitignore..."
+        if ! grep -q "# Nelson Loop" "$gitignore"; then
+            print_info "Adding Nelson entries to .gitignore..."
             cat >> "$gitignore" <<'EOF'
 
-# Ralph Loop
-.ralph/progress.txt
-.ralph/archive/
-.ralph/.last-branch
+# Nelson Loop
+.nelson/progress.txt
+.nelson/archive/
+.nelson/.last-branch
 EOF
             print_success ".gitignore updated"
         fi
     else
-        print_info "Creating .gitignore with Ralph entries..."
+        print_info "Creating .gitignore with Nelson entries..."
         cat > "$gitignore" <<'EOF'
-# Ralph Loop
-.ralph/progress.txt
-.ralph/archive/
-.ralph/.last-branch
+# Nelson Loop
+.nelson/progress.txt
+.nelson/archive/
+.nelson/.last-branch
 EOF
         print_success ".gitignore created"
     fi
@@ -200,8 +200,8 @@ echo ""
 
 # Scaffold based on mode
 case "$MODE" in
-    snarktank)
-        scaffold_snarktank "$TARGET_DIR"
+    toro)
+        scaffold_toro "$TARGET_DIR"
         scaffold_agents_md "$TARGET_DIR"
         create_gitignore_entries "$TARGET_DIR"
         ;;
@@ -211,39 +211,39 @@ case "$MODE" in
         create_gitignore_entries "$TARGET_DIR"
         ;;
     both)
-        scaffold_snarktank "$TARGET_DIR"
+        scaffold_toro "$TARGET_DIR"
         scaffold_plan_build "$TARGET_DIR"
         scaffold_agents_md "$TARGET_DIR"
         create_gitignore_entries "$TARGET_DIR"
         ;;
     *)
-        echo "Error: Invalid mode '$MODE'. Use: snarktank, plan-build, or both"
+        echo "Error: Invalid mode '$MODE'. Use: toro, plan-build, or both"
         exit 1
         ;;
 esac
 
 echo ""
-print_success "Ralph framework scaffolded successfully!"
+print_success "Nelson framework scaffolded successfully!"
 echo ""
 print_info "Next steps:"
 
-if [ "$MODE" = "snarktank" ] || [ "$MODE" = "both" ]; then
+if [ "$MODE" = "toro" ] || [ "$MODE" = "both" ]; then
     echo ""
-    echo "  Snarktank/Ralph mode:"
-    echo "    1. Generate PRD: ralph-prd-generator .ralph/prd.json"
-    echo "       OR edit .ralph/prd.json with your user stories"
-    echo "    2. Update .ralph/AGENTS.md with project-specific info"
-    echo "    3. Run: .ralph/ralph.sh --tool claude 10"
+    echo "  Toro/Nelson mode:"
+    echo "    1. Generate PRD: nelson-prd-generator .nelson/prd.json"
+    echo "       OR edit .nelson/prd.json with your user stories"
+    echo "    2. Update .nelson/AGENTS.md with project-specific info"
+    echo "    3. Run: .nelson/nelson.sh --tool claude 10"
 fi
 
 if [ "$MODE" = "plan-build" ] || [ "$MODE" = "both" ]; then
     echo ""
     echo "  Plan/Build mode:"
     echo "    1. Create specs/ directory with specifications"
-    echo "    2. Update .ralph/PROMPT_plan.md with your project goal"
-    echo "    3. Run planning: .ralph/loop.sh plan"
-    echo "    4. Review .ralph/@IMPLEMENTATION_PLAN.md"
-    echo "    5. Run building: .ralph/loop.sh 20"
+    echo "    2. Update .nelson/PROMPT_plan.md with your project goal"
+    echo "    3. Run planning: .nelson/loop.sh plan"
+    echo "    4. Review .nelson/@IMPLEMENTATION_PLAN.md"
+    echo "    5. Run building: .nelson/loop.sh 20"
 fi
 
 echo ""

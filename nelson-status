@@ -1,11 +1,11 @@
 #!/bin/bash
-# Ralph Status Dashboard - Monitor Ralph Loop progress
-# Usage: ralph-status [--watch [interval]] [--prd path/to/prd.json]
+# Nelson Status Dashboard - Monitor Nelson Loop progress
+# Usage: nelson-status [--watch [interval]] [--prd path/to/prd.json]
 
 REFRESH_INTERVAL=2
 WATCH_MODE=false
-PRD_FILE=".ralph/prd.json"
-PLAN_FILE=".ralph/@IMPLEMENTATION_PLAN.md"
+PRD_FILE=".nelson/prd.json"
+PLAN_FILE=".nelson/@IMPLEMENTATION_PLAN.md"
 MODE="auto"
 
 # Parse arguments
@@ -24,11 +24,11 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --help|-h)
-      echo "Usage: ralph-status [--watch [interval]] [--prd path/to/prd.json]"
+      echo "Usage: nelson-status [--watch [interval]] [--prd path/to/prd.json]"
       echo ""
       echo "Options:"
       echo "  --watch, -w [N]   Auto-refresh every N seconds (default: 2)"
-      echo "  --prd PATH        Path to prd.json (default: .ralph/prd.json)"
+      echo "  --prd PATH        Path to prd.json (default: .nelson/prd.json)"
       echo "  --help, -h        Show this help"
       exit 0
       ;;
@@ -53,7 +53,7 @@ show_status() {
 
   # Header
   echo -e "${BLUE}╔════════════════════════════════════════════════════════════════════════╗${NC}"
-  echo -e "${BLUE}║${NC}  ${BOLD}Ralph Status Dashboard${NC}                                              ${BLUE}║${NC}"
+  echo -e "${BLUE}║${NC}  ${BOLD}Nelson Status Dashboard${NC}                                              ${BLUE}║${NC}"
   echo -e "${BLUE}╚════════════════════════════════════════════════════════════════════════╝${NC}"
   echo ""
 
@@ -61,11 +61,11 @@ show_status() {
   if [ -f "$PRD_FILE" ] && [ -f "$PLAN_FILE" ]; then
     MODE="both"
   elif [ -f "$PRD_FILE" ]; then
-    MODE="snarktank"
+    MODE="toro"
   elif [ -f "$PLAN_FILE" ]; then
     MODE="plan-build"
   else
-    echo -e "${RED}✗ No Ralph files found${NC}"
+    echo -e "${RED}✗ No Nelson files found${NC}"
     echo ""
     echo "Looking for: $PRD_FILE or $PLAN_FILE"
     echo "Run this from your project directory"
@@ -73,8 +73,8 @@ show_status() {
   fi
 
   # Parse based on mode
-  if [ "$MODE" = "snarktank" ] || [ "$MODE" = "both" ]; then
-    # Snarktank mode - parse PRD
+  if [ "$MODE" = "toro" ] || [ "$MODE" = "both" ]; then
+    # Toro mode - parse PRD
     PROJECT=$(jq -r '.project // "Unknown"' "$PRD_FILE" 2>/dev/null)
     BRANCH=$(jq -r '.branchName // "Unknown"' "$PRD_FILE" 2>/dev/null)
     TOTAL_STORIES=$(jq '.userStories | length' "$PRD_FILE" 2>/dev/null)
@@ -145,8 +145,8 @@ show_status() {
   echo -e "${BOLD}Task List:${NC}"
   echo ""
 
-  if [ "$MODE" = "snarktank" ] || [ "$MODE" = "both" ]; then
-    # Snarktank task list
+  if [ "$MODE" = "toro" ] || [ "$MODE" = "both" ]; then
+    # Toro task list
     jq -r '.userStories[] | "\(.id)|\(.title)|\(.passes)"' "$PRD_FILE" 2>/dev/null | while IFS='|' read -r id title passes; do
       if [ "$passes" = "true" ]; then
         echo -e "  ${GREEN}✓${NC} $id - ${GRAY}$title${NC}"
@@ -200,7 +200,7 @@ show_status() {
   fi
 
   # Last file modification in project (excluding .git and target)
-  LAST_MODIFIED=$(find . -type f -not -path "./.git/*" -not -path "./target/*" -not -path "./.ralph/archive/*" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | awk '{$1=""; print substr($0,2)}')
+  LAST_MODIFIED=$(find . -type f -not -path "./.git/*" -not -path "./target/*" -not -path "./.nelson/archive/*" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | awk '{$1=""; print substr($0,2)}')
   if [ -n "$LAST_MODIFIED" ]; then
     LAST_MOD_TIME=$(stat -c %Y "$LAST_MODIFIED" 2>/dev/null || echo "0")
     TIME_SINCE_MOD=$((CURRENT_TIME - LAST_MOD_TIME))
@@ -214,12 +214,12 @@ show_status() {
     fi
   fi
 
-  # Ralph process check
+  # Nelson process check
   if pgrep -f "ralph.*\.sh" > /dev/null 2>&1; then
-    RALPH_PID=$(pgrep -f "ralph.*\.sh" | head -1)
-    echo -e "  ${GREEN}✓ Ralph running${NC} (PID: $RALPH_PID)"
+    NELSON_PID=$(pgrep -f "ralph.*\.sh" | head -1)
+    echo -e "  ${GREEN}✓ Nelson running${NC} (PID: $NELSON_PID)"
   else
-    echo -e "  ${GRAY}○ Ralph not running${NC}"
+    echo -e "  ${GRAY}○ Nelson not running${NC}"
   fi
 
   # Claude process check

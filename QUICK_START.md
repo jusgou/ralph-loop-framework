@@ -1,10 +1,10 @@
-# Ralph Loop - Quick Start Guide
+# Nelson Loop - Quick Start Guide
 
 ## Installation Complete ✓
 
-The Ralph Loop framework is installed at `~/.ralph-templates/`
+The Nelson Loop framework is installed at `~/.nelson-templates/`
 
-The `ralph-scaffold` command is in your PATH.
+The `nelson-scaffold` command is in your PATH.
 
 ## 30-Second Start
 
@@ -12,26 +12,26 @@ The `ralph-scaffold` command is in your PATH.
 # 1. Go to your project
 cd /path/to/project
 
-# 2. Scaffold Ralph files (creates .ralph/ directory)
-ralph-scaffold both .
+# 2. Scaffold Nelson files (creates .nelson/ directory)
+nelson-scaffold both .
 
-# 3. Generate PRD interactively (RECOMMENDED for snarktank mode)
-ralph-prd-generator    # Auto-detects .ralph/ and creates .ralph/prd.json
+# 3. Generate PRD interactively (RECOMMENDED for toro mode)
+nelson-prd-generator    # Auto-detects .nelson/ and creates .nelson/prd.json
 
-# 4a. For snarktank mode: Run Ralph
-.ralph/ralph.sh --tool claude 10
+# 4a. For toro mode: Run Nelson
+.nelson/nelson.sh --tool claude 10
 
 # OR
 
 # 4b. For plan/build mode: Generate specs, then run
-ralph-specs-generator     # Interactive specs creation
-.ralph/loop.sh plan       # Planning phase
-.ralph/loop.sh 20         # Build phase
+nelson-specs-generator     # Interactive specs creation
+.nelson/loop.sh plan       # Planning phase
+.nelson/loop.sh 20         # Build phase
 ```
 
 ## Which Mode Should I Use?
 
-### Use Snarktank Mode When:
+### Use Toro Mode When:
 - ✓ You have clear user stories
 - ✓ Well-defined acceptance criteria
 - ✓ Feature-based development
@@ -51,56 +51,56 @@ ralph-specs-generator     # Interactive specs creation
 ## Command Reference
 
 ```bash
-# Scaffold a project (creates .ralph/ directory)
-ralph-scaffold both /path/to/project
-ralph-scaffold snarktank /path/to/project
-ralph-scaffold plan-build /path/to/project
+# Scaffold a project (creates .nelson/ directory)
+nelson-scaffold both /path/to/project
+nelson-scaffold toro /path/to/project
+nelson-scaffold plan-build /path/to/project
 
 # Generate PRD interactively (NEW!)
-ralph-prd-generator                # Auto-detects .ralph/, creates .ralph/prd.json
-ralph-prd-generator my-prd.json    # Custom output file
+nelson-prd-generator                # Auto-detects .nelson/, creates .nelson/prd.json
+nelson-prd-generator my-prd.json    # Custom output file
 
 # Generate specifications interactively (NEW!)
-ralph-specs-generator              # Auto-creates specs/*.md
+nelson-specs-generator              # Auto-creates specs/*.md
 
-# Monitor Ralph progress (NEW!)
-ralph-status                       # One-shot status view
-ralph-status --watch               # Auto-refresh every 2s
-ralph-status --watch 5             # Auto-refresh every 5s
+# Monitor Nelson progress (NEW!)
+nelson-status                       # One-shot status view
+nelson-status --watch               # Auto-refresh every 2s
+nelson-status --watch 5             # Auto-refresh every 5s
 
-# Run snarktank mode
-.ralph/ralph.sh --tool claude 10   # 10 iterations max
+# Run toro mode
+.nelson/nelson.sh --tool claude 10   # 10 iterations max
 
 # Run plan/build mode
-.ralph/loop.sh plan                # Planning mode
-.ralph/loop.sh 20                  # Build mode, 20 iterations
+.nelson/loop.sh plan                # Planning mode
+.nelson/loop.sh 20                  # Build mode, 20 iterations
 
-# Use ralph-loop plugin (in-session)
-/ralph-loop "Task description" --max-iterations 20
+# Use nelson-loop plugin (in-session)
+/nelson-loop "Task description" --max-iterations 20
 ```
 
 ## File Cheat Sheet
 
-All Ralph files live in `.ralph/` directory to keep your project root clean!
+All Nelson files live in `.nelson/` directory to keep your project root clean!
 
-### Snarktank Mode Files
-- `.ralph/ralph.sh` - The loop script (executable)
-- `.ralph/CLAUDE.md` - Instructions for Claude
-- `.ralph/prd.json` - User stories (EDIT THIS)
-- `.ralph/progress.txt` - Iteration log (auto-generated)
-- `.ralph/AGENTS.md` - Project guide (UPDATE THIS)
+### Toro Mode Files
+- `.nelson/nelson.sh` - The loop script (executable)
+- `.nelson/CLAUDE.md` - Instructions for Claude
+- `.nelson/prd.json` - User stories (EDIT THIS)
+- `.nelson/progress.txt` - Iteration log (auto-generated)
+- `.nelson/AGENTS.md` - Project guide (UPDATE THIS)
 
 ### Plan/Build Mode Files
-- `.ralph/loop.sh` - The loop script (executable)
-- `.ralph/PROMPT_plan.md` - Planning instructions (customize goal)
-- `.ralph/PROMPT_build.md` - Build instructions
-- `.ralph/@IMPLEMENTATION_PLAN.md` - Task list (auto-generated)
-- `.ralph/AGENTS.md` - Project guide (UPDATE THIS)
+- `.nelson/loop.sh` - The loop script (executable)
+- `.nelson/PROMPT_plan.md` - Planning instructions (customize goal)
+- `.nelson/PROMPT_build.md` - Build instructions
+- `.nelson/@IMPLEMENTATION_PLAN.md` - Task list (auto-generated)
+- `.nelson/AGENTS.md` - Project guide (UPDATE THIS)
 - `specs/` - Your specifications (CREATE THIS in project root)
 
 ## Completion Promises
 
-Ralph stops when it outputs:
+Nelson stops when it outputs:
 ```
 <promise>COMPLETE</promise>
 ```
@@ -109,11 +109,11 @@ If not output, runs until max iterations.
 
 ## PRD Generator (The Easy Button!)
 
-The hardest part of Ralph is writing good user stories with testable acceptance criteria. The PRD generator does this for you!
+The hardest part of Nelson is writing good user stories with testable acceptance criteria. The PRD generator does this for you!
 
 ### Interactive Mode (Recommended)
 ```bash
-ralph-prd-generator
+nelson-prd-generator
 ```
 
 You'll be asked:
@@ -135,7 +135,7 @@ Claude will then generate a complete `prd.json` with:
 ```json
 {
   "project": "TodoApp",
-  "branchName": "ralph/dark-mode",
+  "branchName": "nelson/dark-mode",
   "description": "Add dark mode toggle to existing todo application",
   "userStories": [
     {
@@ -169,7 +169,7 @@ The specs generator makes it easy to create comprehensive specifications for the
 
 ### Interactive Mode (Recommended)
 ```bash
-ralph-specs-generator
+nelson-specs-generator
 ```
 
 You'll be asked:
@@ -208,61 +208,61 @@ Or a single comprehensive spec file if the feature is smaller.
 
 ## Common Workflows
 
-### Workflow 1: New Feature (Snarktank with PRD Generator)
+### Workflow 1: New Feature (Toro with PRD Generator)
 ```bash
-ralph-scaffold snarktank .
-ralph-prd-generator          # Interactive PRD creation (creates .ralph/prd.json)
-# Edit .ralph/AGENTS.md with project info
+nelson-scaffold toro .
+nelson-prd-generator          # Interactive PRD creation (creates .nelson/prd.json)
+# Edit .nelson/AGENTS.md with project info
 
-# Run Ralph in one terminal
-.ralph/ralph.sh --tool claude 15
+# Run Nelson in one terminal
+.nelson/nelson.sh --tool claude 15
 
 # Monitor in another terminal (recommended!)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Workflow 1b: New Feature (Manual PRD)
 ```bash
-ralph-scaffold snarktank .
-# Manually edit .ralph/prd.json with user stories
-# Edit .ralph/AGENTS.md with project info
-.ralph/ralph.sh --tool claude 15
+nelson-scaffold toro .
+# Manually edit .nelson/prd.json with user stories
+# Edit .nelson/AGENTS.md with project info
+.nelson/nelson.sh --tool claude 15
 ```
 
 ### Workflow 2: Complex Project (Plan/Build with Specs Generator)
 ```bash
-ralph-scaffold plan-build .
-ralph-specs-generator    # Interactive specs creation (creates specs/*.md)
-# Edit .ralph/AGENTS.md with project info
+nelson-scaffold plan-build .
+nelson-specs-generator    # Interactive specs creation (creates specs/*.md)
+# Edit .nelson/AGENTS.md with project info
 
 # Run planning phase in one terminal
-.ralph/loop.sh plan
+.nelson/loop.sh plan
 
-# Review .ralph/@IMPLEMENTATION_PLAN.md
-cat .ralph/@IMPLEMENTATION_PLAN.md
+# Review .nelson/@IMPLEMENTATION_PLAN.md
+cat .nelson/@IMPLEMENTATION_PLAN.md
 
 # Run build phase
-.ralph/loop.sh 30
+.nelson/loop.sh 30
 
 # Monitor in another terminal (recommended!)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Workflow 2b: Complex Project (Manual Specs)
 ```bash
-ralph-scaffold plan-build .
+nelson-scaffold plan-build .
 mkdir specs
 # Write specs/*.md files
-# Update .ralph/PROMPT_plan.md with goal
-.ralph/loop.sh plan
-# Review .ralph/@IMPLEMENTATION_PLAN.md
-.ralph/loop.sh 30
+# Update .nelson/PROMPT_plan.md with goal
+.nelson/loop.sh plan
+# Review .nelson/@IMPLEMENTATION_PLAN.md
+.nelson/loop.sh 30
 ```
 
 ### Workflow 3: Quick Task (Plugin)
 ```bash
 # In Claude Code session
-/ralph-loop "Add dark mode toggle" --max-iterations 10
+/nelson-loop "Add dark mode toggle" --max-iterations 10
 ```
 
 ## Customization Tips
@@ -296,14 +296,14 @@ and PostgreSQL.
 
 ## Troubleshooting
 
-### "command not found: ralph-scaffold"
+### "command not found: nelson-scaffold"
 ```bash
 # Reload your shell
 source ~/.bashrc
 # OR start a new terminal
 ```
 
-### Ralph keeps repeating the same task
+### Nelson keeps repeating the same task
 - Check acceptance criteria are specific
 - Review progress.txt or @IMPLEMENTATION_PLAN.md
 - Add learnings to AGENTS.md
@@ -317,7 +317,7 @@ source ~/.bashrc
 
 Read the complete guide:
 ```bash
-cat ~/.ralph-templates/README.md
+cat ~/.nelson-templates/README.md
 ```
 
 ## Examples
@@ -327,5 +327,5 @@ See working examples in the README.md file.
 ---
 
 Need help? Check the README.md or visit:
-- https://ghuntley.com/ralph/
-- https://github.com/snarktank/ralph
+- https://ghuntley.com/nelson/
+- https://github.com/toro/ralph

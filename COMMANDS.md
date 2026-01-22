@@ -1,28 +1,28 @@
-# Ralph Loop Framework - Command Reference
+# Nelson Loop Framework - Command Reference
 
 All commands are available after reloading your shell: `source ~/.bashrc`
 
 ## Core Commands
 
-### ralph-scaffold
-Scaffold a new Ralph project with template files.
+### nelson-scaffold
+Scaffold a new Nelson project with template files.
 
 ```bash
 # Scaffold both approaches
-ralph-scaffold both /path/to/project
+nelson-scaffold both /path/to/project
 
-# Scaffold snarktank mode only (PRD-based)
-ralph-scaffold snarktank /path/to/project
+# Scaffold toro mode only (PRD-based)
+nelson-scaffold toro /path/to/project
 
 # Scaffold plan/build mode only (IMPLEMENTATION_PLAN-based)
-ralph-scaffold plan-build /path/to/project
+nelson-scaffold plan-build /path/to/project
 
 # Scaffold in current directory
-ralph-scaffold both .
+nelson-scaffold both .
 ```
 
 **What it does:**
-- Creates loop orchestrator scripts (ralph.sh, loop.sh)
+- Creates loop orchestrator scripts (nelson.sh, loop.sh)
 - Creates prompt files (CLAUDE.md, PROMPT_*.md)
 - Creates template files (prd.json, @IMPLEMENTATION_PLAN.md)
 - Creates AGENTS.md project guide
@@ -30,15 +30,15 @@ ralph-scaffold both .
 
 ---
 
-### ralph-prd-generator (NEW!)
+### nelson-prd-generator (NEW!)
 Interactively generate a comprehensive prd.json file.
 
 ```bash
 # Generate prd.json in current directory
-ralph-prd-generator
+nelson-prd-generator
 
 # Generate with custom filename
-ralph-prd-generator my-feature.json
+nelson-prd-generator my-feature.json
 ```
 
 **What it does:**
@@ -46,11 +46,11 @@ ralph-prd-generator my-feature.json
 - Collects feature requirements
 - Generates well-structured user stories
 - Creates specific, testable acceptance criteria
-- Outputs valid prd.json ready for Ralph
+- Outputs valid prd.json ready for Nelson
 
 **Questions asked:**
 1. Project name
-2. Branch name (e.g., ralph/feature-name)
+2. Branch name (e.g., nelson/feature-name)
 3. Feature description
 4. Main goal/problem
 5. Tech stack
@@ -65,12 +65,12 @@ ralph-prd-generator my-feature.json
 
 ---
 
-### ralph-specs-generator (NEW!)
+### nelson-specs-generator (NEW!)
 Interactively generate comprehensive specification documents for plan/build mode.
 
 ```bash
 # Generate specs/*.md in current directory
-ralph-specs-generator
+nelson-specs-generator
 ```
 
 **What it does:**
@@ -100,18 +100,18 @@ ralph-specs-generator
 
 ---
 
-### ralph-status (NEW!)
-Monitor Ralph's progress in real-time with a comprehensive dashboard.
+### nelson-status (NEW!)
+Monitor Nelson's progress in real-time with a comprehensive dashboard.
 
 ```bash
 # One-shot status view
-ralph-status
+nelson-status
 
 # Auto-refresh every 2 seconds (recommended)
-ralph-status --watch
+nelson-status --watch
 
 # Auto-refresh with custom interval (5 seconds)
-ralph-status --watch 5
+nelson-status --watch 5
 ```
 
 **What it shows:**
@@ -119,26 +119,26 @@ ralph-status --watch 5
 - Progress bar with completion percentage
 - Full task list with status indicators (✓ completed, ▶ in progress, ○ pending)
 - Activity monitoring (last commit, last file modified)
-- Process status (Ralph and Claude PIDs, CPU, memory)
+- Process status (Nelson and Claude PIDs, CPU, memory)
 - Warning if no activity detected (stuck detection)
 
 **Works with both modes:**
-- Auto-detects snarktank mode (reads .ralph/prd.json)
-- Auto-detects plan/build mode (reads .ralph/@IMPLEMENTATION_PLAN.md)
+- Auto-detects toro mode (reads .nelson/prd.json)
+- Auto-detects plan/build mode (reads .nelson/@IMPLEMENTATION_PLAN.md)
 
 **Use when:**
-- Ralph runs in `--print` mode (which is silent by design)
-- You want to see what Ralph is working on
-- You need to detect if Ralph is stuck
+- Nelson runs in `--print` mode (which is silent by design)
+- You want to see what Nelson is working on
+- You need to detect if Nelson is stuck
 - You want real-time progress updates
 
 ---
 
-### ralph-prd-agent
+### nelson-prd-agent
 Launch an interactive Claude session for PRD generation.
 
 ```bash
-ralph-prd-agent
+nelson-prd-agent
 ```
 
 **What it does:**
@@ -155,22 +155,22 @@ ralph-prd-agent
 
 ---
 
-## Ralph Loop Scripts
+## Nelson Loop Scripts
 
-These are created by `ralph-scaffold` in your project directory.
+These are created by `nelson-scaffold` in your project directory.
 
-### ./ralph.sh (Snarktank Mode)
-Run the snarktank/ralph loop with PRD-based user stories.
+### ./nelson.sh (Toro Mode)
+Run the toro/ralph loop with PRD-based user stories.
 
 ```bash
 # Run with Claude Code for 10 iterations
-./ralph.sh --tool claude 10
+./nelson.sh --tool claude 10
 
 # Run with Amp
-./ralph.sh --tool amp 15
+./nelson.sh --tool amp 15
 
 # Default (Claude, 10 iterations)
-./ralph.sh
+./nelson.sh
 ```
 
 **What it does:**
@@ -210,23 +210,23 @@ Run the plan/build loop with implementation plan.
 
 ## Plugin Commands
 
-### /ralph-loop
-Run Ralph Loop in current Claude Code session.
+### /nelson-loop
+Run Nelson Loop in current Claude Code session.
 
 ```bash
-/ralph-loop "Implement dark mode" --max-iterations 10
-/ralph-loop "Add authentication" --completion-promise "AUTH COMPLETE"
+/nelson-loop "Implement dark mode" --max-iterations 10
+/nelson-loop "Add authentication" --completion-promise "AUTH COMPLETE"
 ```
 
 **What it does:**
-- Runs Ralph iterations in your current session
+- Runs Nelson iterations in your current session
 - Interactive (can ask questions)
 - Uses stop hooks to loop
 - Good for supervised work
 
 **Difference from scripts:**
-- `/ralph-loop`: Same session, interactive, supervised
-- `./ralph.sh` / `./loop.sh`: Fresh instances, autonomous, unsupervised
+- `/nelson-loop`: Same session, interactive, supervised
+- `./nelson.sh` / `./loop.sh`: Fresh instances, autonomous, unsupervised
 
 ---
 
@@ -234,12 +234,12 @@ Run Ralph Loop in current Claude Code session.
 
 ### Project Templates
 
-Located at `~/.ralph-templates/`
+Located at `~/.nelson-templates/`
 
-**Snarktank mode:**
-- `snarktank/ralph.sh` - Loop orchestrator
-- `snarktank/CLAUDE.md` - Instructions for Claude
-- `snarktank/prd.json.example` - PRD template
+**Toro mode:**
+- `toro/nelson.sh` - Loop orchestrator
+- `toro/CLAUDE.md` - Instructions for Claude
+- `toro/prd.json.example` - PRD template
 
 **Plan/Build mode:**
 - `plan-build/loop.sh` - Loop orchestrator
@@ -251,11 +251,11 @@ Located at `~/.ralph-templates/`
 
 ### Helper Scripts
 
-- `ralph-scaffold` - Project scaffolder
-- `ralph-prd-generator` - Interactive PRD generator
-- `ralph-specs-generator` - Interactive specs generator
-- `ralph-prd-agent` - Conversational PRD generator
-- `ralph-status` - Monitoring dashboard
+- `nelson-scaffold` - Project scaffolder
+- `nelson-prd-generator` - Interactive PRD generator
+- `nelson-specs-generator` - Interactive specs generator
+- `nelson-prd-agent` - Conversational PRD generator
+- `nelson-status` - Monitoring dashboard
 - `PRD_GENERATOR_PROMPT.md` - Agent prompt for PRD generation
 
 ### Documentation
@@ -268,24 +268,24 @@ Located at `~/.ralph-templates/`
 
 ## Common Workflows
 
-### Workflow 1: New Feature with Snarktank
+### Workflow 1: New Feature with Toro
 
 ```bash
 # 1. Scaffold the project
 cd /path/to/project
-ralph-scaffold snarktank .
+nelson-scaffold toro .
 
 # 2. Generate PRD interactively (RECOMMENDED)
-ralph-prd-generator
+nelson-prd-generator
 
 # 3. Update project guide
-vim .ralph/AGENTS.md  # Add how to run tests, build, etc.
+vim .nelson/AGENTS.md  # Add how to run tests, build, etc.
 
-# 4. Run Ralph (in one terminal)
-.ralph/ralph.sh --tool claude 15
+# 4. Run Nelson (in one terminal)
+.nelson/nelson.sh --tool claude 15
 
 # 5. Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Workflow 2: Complex Project with Plan/Build
@@ -293,10 +293,10 @@ ralph-status --watch
 ```bash
 # 1. Scaffold the project
 cd /path/to/project
-ralph-scaffold plan-build .
+nelson-scaffold plan-build .
 
 # 2. Generate specifications interactively (RECOMMENDED)
-ralph-specs-generator
+nelson-specs-generator
 
 # OR manually create specifications
 # mkdir specs
@@ -306,55 +306,55 @@ ralph-specs-generator
 # EOF
 
 # 3. Update project guide
-vim .ralph/AGENTS.md  # Add how to run tests, build, etc.
+vim .nelson/AGENTS.md  # Add how to run tests, build, etc.
 
 # 4. Run planning
-.ralph/loop.sh plan
+.nelson/loop.sh plan
 
 # 5. Review plan
-cat .ralph/@IMPLEMENTATION_PLAN.md
+cat .nelson/@IMPLEMENTATION_PLAN.md
 
 # 6. Run build
-.ralph/loop.sh 30
+.nelson/loop.sh 30
 
 # 7. Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Workflow 3: Hybrid Approach
 
 ```bash
 # 1. Use both modes
-ralph-scaffold both .
+nelson-scaffold both .
 
 # 2. Start with planning
-ralph-specs-generator
-.ralph/loop.sh plan
-cat .ralph/@IMPLEMENTATION_PLAN.md
+nelson-specs-generator
+.nelson/loop.sh plan
+cat .nelson/@IMPLEMENTATION_PLAN.md
 
-# 3. Switch to snarktank for implementation
-ralph-prd-generator  # Convert plan to user stories
-.ralph/ralph.sh --tool claude 20
+# 3. Switch to toro for implementation
+nelson-prd-generator  # Convert plan to user stories
+.nelson/nelson.sh --tool claude 20
 
 # 4. Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Workflow 4: In-Session with Plugin
 
 ```bash
 # In a Claude Code session
-/ralph-loop "Add user profile page with avatar upload" --max-iterations 15
+/nelson-loop "Add user profile page with avatar upload" --max-iterations 15
 ```
 
 ---
 
 ## File Outputs
 
-### Created by ralph-scaffold
+### Created by nelson-scaffold
 
-Snarktank mode:
-- `ralph.sh` (executable)
+Toro mode:
+- `nelson.sh` (executable)
 - `CLAUDE.md`
 - `prd.json`
 - `prd.json.example`
@@ -368,9 +368,9 @@ Plan/Build mode:
 - `@IMPLEMENTATION_PLAN.md`
 - `AGENTS.md`
 
-### Created during Ralph runs
+### Created during Nelson runs
 
-Snarktank:
+Toro:
 - `progress.txt` - Learnings from each iteration
 - `archive/YYYY-MM-DD-branch-name/` - Previous runs
 
@@ -385,7 +385,7 @@ Plan/Build:
 
 ```bash
 # Added to ~/.bashrc
-export PATH="$HOME/.ralph-templates:$PATH"
+export PATH="$HOME/.nelson-templates:$PATH"
 ```
 
 ### Reload shell
@@ -404,11 +404,11 @@ exec bash
 
 Required:
 - `claude` - Claude Code CLI
-- `jq` - JSON processor (for ralph-prd-generator)
+- `jq` - JSON processor (for nelson-prd-generator)
 - `git` - Version control
 
 Optional:
-- `amp` - Anthropic Amp (for ./ralph.sh --tool amp)
+- `amp` - Anthropic Amp (for ./nelson.sh --tool amp)
 
 Install jq:
 ```bash
@@ -428,38 +428,38 @@ brew install jq
 
 ```bash
 # Quick reference
-cat ~/.ralph-templates/QUICK_START.md
+cat ~/.nelson-templates/QUICK_START.md
 
 # Full documentation
-cat ~/.ralph-templates/README.md
+cat ~/.nelson-templates/README.md
 
 # Command reference
-cat ~/.ralph-templates/COMMANDS.md
+cat ~/.nelson-templates/COMMANDS.md
 
 # PRD generator guide
-cat ~/.ralph-templates/PRD_GENERATOR_PROMPT.md
+cat ~/.nelson-templates/PRD_GENERATOR_PROMPT.md
 
 # List all templates
-ls -la ~/.ralph-templates/
+ls -la ~/.nelson-templates/
 ```
 
 ---
 
 ## Tips
 
-1. **Always update .ralph/AGENTS.md** - Future iterations depend on it
-2. **Use ralph-prd-generator** - Saves hours of PRD writing (snarktank mode)
-3. **Use ralph-specs-generator** - Saves hours of spec writing (plan/build mode)
-4. **Use ralph-status --watch** - Monitor progress in real-time
+1. **Always update .nelson/AGENTS.md** - Future iterations depend on it
+2. **Use nelson-prd-generator** - Saves hours of PRD writing (toro mode)
+3. **Use nelson-specs-generator** - Saves hours of spec writing (plan/build mode)
+4. **Use nelson-status --watch** - Monitor progress in real-time
 5. **Start small** - Test with 5-10 iterations first
-6. **Review commits** - Ralph auto-commits, check git log
-7. **Tune prompts** - Edit .ralph/CLAUDE.md or .ralph/PROMPT_*.md if Ralph goes wrong
+6. **Review commits** - Nelson auto-commits, check git log
+7. **Tune prompts** - Edit .nelson/CLAUDE.md or .nelson/PROMPT_*.md if Nelson goes wrong
 8. **Set completion promises** - Prevent infinite loops
 
 ---
 
 ## Learn More
 
-- Original technique: https://ghuntley.com/ralph/
-- Snarktank repo: https://github.com/snarktank/ralph
-- Ralph Orchestrator: https://github.com/mikeyobrien/ralph-orchestrator
+- Original technique: https://ghuntley.com/nelson/
+- Toro repo: https://github.com/toro/ralph
+- Nelson Orchestrator: https://github.com/mikeyobrien/nelson-orchestrator

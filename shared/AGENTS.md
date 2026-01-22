@@ -125,7 +125,7 @@ src/
 ### Development Dependencies
 - [List dev dependencies and their purpose]
 
-## Notes for Ralph
+## Notes for Nelson
 
 - Always run tests before marking a task complete
 - Update this file when you discover new patterns or gotchas

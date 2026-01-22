@@ -1,70 +1,83 @@
-# Ralph Loop Framework
+```
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ██╗  ██╗ █████╗       ██╗  ██╗ █████╗     ██╗        ║
+║   ██║  ██║██╔══██╗      ██║  ██║██╔══██╗    ██║        ║
+║   ███████║███████║█████╗███████║███████║    ██║        ║
+║   ██╔══██║██╔══██║╚════╝██╔══██║██╔══██║    ╚═╝        ║
+║   ██║  ██║██║  ██║      ██║  ██║██║  ██║    ██╗        ║
+║   ╚═╝  ╚═╝╚═╝  ╚═╝      ╚═╝  ╚═╝╚═╝  ╚═╝    ╚═╝        ║
+║                                                          ║
+╚══════════════════════════════════════════════════════════╝
+```
 
-A hybrid framework supporting two Ralph Loop methodologies for autonomous AI development.
+# Nelson Loop Framework
+
+A hybrid framework supporting two Nelson Loop methodologies for autonomous AI development.
 
 ## Quick Start
 
-### Snarktank Mode (PRD-based)
+### Toro Mode (PRD-based)
 ```bash
 # Scaffold a new project
 cd /path/to/project
-ralph-scaffold both .
+nelson-scaffold both .
 
 # Generate PRD interactively
-ralph-prd-generator
+nelson-prd-generator
 
-# Run Ralph
-.ralph/ralph.sh --tool claude 15
+# Run Nelson
+.nelson/nelson.sh --tool claude 15
 
 # Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ### Plan/Build Mode
 ```bash
 # Scaffold a new project
 cd /path/to/project
-ralph-scaffold both .
+nelson-scaffold both .
 
 # Generate specifications interactively
-ralph-specs-generator
+nelson-specs-generator
 
 # Run planning phase
-.ralph/loop.sh plan
+.nelson/loop.sh plan
 
 # Run build phase
-.ralph/loop.sh 20
+.nelson/loop.sh 20
 
 # Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 ```
 
 ## Core Commands
 
-### ralph-scaffold
-Scaffold a new Ralph project with template files in `.ralph/` directory.
+### nelson-scaffold
+Scaffold a new Nelson project with template files in `.nelson/` directory.
 
 ```bash
-ralph-scaffold both .          # Both modes
-ralph-scaffold snarktank .     # PRD-based only
-ralph-scaffold plan-build .    # Plan/build only
+nelson-scaffold both .          # Both modes
+nelson-scaffold toro .     # PRD-based only
+nelson-scaffold plan-build .    # Plan/build only
 ```
 
-### ralph-prd-generator (THE EASY BUTTON!)
+### nelson-prd-generator (THE EASY BUTTON!)
 Interactively generate comprehensive prd.json files.
 
 ```bash
-ralph-prd-generator           # Auto-creates .ralph/prd.json
-ralph-prd-generator my.json   # Custom path
+nelson-prd-generator           # Auto-creates .nelson/prd.json
+nelson-prd-generator my.json   # Custom path
 ```
 
 Asks you questions and generates well-structured user stories with testable acceptance criteria.
 
-### ralph-specs-generator (THE EASY BUTTON FOR PLAN/BUILD!)
+### nelson-specs-generator (THE EASY BUTTON FOR PLAN/BUILD!)
 Interactively generate comprehensive specification documents.
 
 ```bash
-ralph-specs-generator         # Auto-creates specs/*.md
+nelson-specs-generator         # Auto-creates specs/*.md
 ```
 
 Asks you questions and generates detailed specifications for the plan/build workflow. Creates structured markdown files covering:
@@ -74,13 +87,38 @@ Asks you questions and generates detailed specifications for the plan/build work
 - UI/UX specifications
 - Edge cases and testing strategy
 
-### ralph-status (MONITORING DASHBOARD)
-Monitor Ralph's progress in real-time.
+### nelson-punch-ralph (QUALITY REVIEW AGENT)
+Aggressive QA agent that reviews completed work and prevents compounding errors.
 
 ```bash
-ralph-status                  # One-shot view
-ralph-status --watch          # Auto-refresh every 2s
-ralph-status --watch 5        # Custom interval
+nelson-punch-ralph           # Review if 3+ stories complete
+nelson-punch-ralph --force   # Force review any time
+```
+
+**What it does:**
+- Reviews completed stories with extreme scrutiny
+- Catches compounding errors before they spread
+- Demands documentation rigor
+- Creates timestamped review logs in `.nelson/nelson-logs/`
+- Identifies critical, major, and minor issues
+- Avoids perfectionism loops (only flags meaningful issues)
+
+**When it runs:**
+- Automatically at stories 3, 7, 11, 15, etc. (every 4 stories starting at 3)
+- Final review when all stories complete
+- On-demand with `nelson-punch-ralph --force`
+
+**Review outputs:**
+- `.nelson/nelson-logs/YYYY-MM-DD-HH-MM-SS-review.md` - Detailed review
+- `.nelson/COMPLETION_REPORT.md` - Final project completion report
+
+### nelson-status (MONITORING DASHBOARD)
+Monitor Nelson's progress in real-time.
+
+```bash
+nelson-status                  # One-shot view
+nelson-status --watch          # Auto-refresh every 2s
+nelson-status --watch 5        # Custom interval
 ```
 
 Shows:
@@ -88,43 +126,43 @@ Shows:
 - Progress bar and completion percentage
 - Full task list with status indicators
 - Activity monitoring (detects if stuck)
-- Process status (Ralph & Claude)
+- Process status (Nelson & Claude)
 
-### Running Ralph
+### Running Nelson
 
 ```bash
-# Snarktank mode (PRD-based)
-.ralph/ralph.sh --tool claude 10
+# Toro mode (PRD-based)
+.nelson/nelson.sh --tool claude 10
 
 # Plan/Build mode
-.ralph/loop.sh plan           # Planning phase
-.ralph/loop.sh 20             # Build phase
+.nelson/loop.sh plan           # Planning phase
+.nelson/loop.sh 20             # Build phase
 ```
 
 ## Two Approaches
 
-### 1. Snarktank Mode (PRD-Based)
+### 1. Toro Mode (PRD-Based)
 
 **Best for**: Well-defined features with clear user stories
 
 **Workflow**:
 ```bash
 # 1. Generate prd.json interactively (RECOMMENDED)
-ralph-prd-generator    # Auto-creates .ralph/prd.json
+nelson-prd-generator    # Auto-creates .nelson/prd.json
 
-# OR manually edit .ralph/prd.json with your user stories
+# OR manually edit .nelson/prd.json with your user stories
 
 # 2. Run the loop
-.ralph/ralph.sh --tool claude 10
+.nelson/nelson.sh --tool claude 10
 
 # 3. Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 
-# Ralph will:
-# - Read .ralph/prd.json
+# Nelson will:
+# - Read .nelson/prd.json
 # - Implement each story
 # - Verify acceptance criteria
-# - Update .ralph/prd.json
+# - Update .nelson/prd.json
 # - Commit and push
 # - Output <promise>COMPLETE</promise> when done
 ```
@@ -136,25 +174,25 @@ ralph-status --watch
 **Workflow**:
 ```bash
 # 1. Generate specifications interactively (RECOMMENDED)
-ralph-specs-generator    # Auto-creates specs/*.md
+nelson-specs-generator    # Auto-creates specs/*.md
 
 # OR manually create specs/ directory with specifications
 # mkdir -p specs
 # echo "# Feature Spec" > specs/feature.md
 
 # 2. Run planning mode
-.ralph/loop.sh plan
+.nelson/loop.sh plan
 
 # 3. Review @IMPLEMENTATION_PLAN.md
-cat .ralph/@IMPLEMENTATION_PLAN.md
+cat .nelson/@IMPLEMENTATION_PLAN.md
 
 # 4. Run build mode
-.ralph/loop.sh 20
+.nelson/loop.sh 20
 
 # 5. Monitor progress (in another terminal)
-ralph-status --watch
+nelson-status --watch
 
-# Ralph will:
+# Nelson will:
 # - Read implementation plan
 # - Implement highest priority task
 # - Run tests
@@ -163,19 +201,19 @@ ralph-status --watch
 # - Output <promise>COMPLETE</promise> when done
 ```
 
-## Monitoring Ralph
+## Monitoring Nelson
 
-**IMPORTANT**: Ralph runs silently in `--print` mode (by design). Use `ralph-status --watch` to monitor progress!
+**IMPORTANT**: Nelson runs silently in `--print` mode (by design). Use `nelson-status --watch` to monitor progress!
 
-**What ralph-status shows:**
+**What nelson-status shows:**
 ```
 ╔════════════════════════════════════════════════════════╗
-║  Ralph Status Dashboard                                ║
+║  Nelson Status Dashboard                                ║
 ╚════════════════════════════════════════════════════════╝
 
-Mode:    snarktank
+Mode:    toro
 Project: MyApp
-Branch:  ralph/dark-mode
+Branch:  nelson/dark-mode
 
 Current Task:
   ID:     US-002
@@ -195,7 +233,7 @@ Task List:
 Activity:
   Last commit: 2 minutes ago: US-001: Add ThemeContext
   Last modified: src/components/Header.tsx (15s ago)
-  ✓ Ralph running (PID: 12345)
+  ✓ Nelson running (PID: 12345)
   ✓ Claude working (PID: 12346, CPU: 42%, MEM: 2.1%)
 
 Refreshing every 2s...
@@ -214,12 +252,12 @@ Writing good user stories with testable acceptance criteria is the hardest part.
 ### Interactive Mode
 
 ```bash
-ralph-prd-generator
+nelson-prd-generator
 ```
 
 You'll be asked:
 1. Project name and description
-2. Branch name (e.g., ralph/feature-name)
+2. Branch name (e.g., nelson/feature-name)
 3. Main goal/problem
 4. Tech stack
 5. List of features
@@ -247,7 +285,7 @@ Features:
 ```json
 {
   "project": "TodoApp",
-  "branchName": "ralph/dark-mode",
+  "branchName": "nelson/dark-mode",
   "userStories": [
     {
       "id": "US-001",
@@ -275,15 +313,15 @@ Features:
 
 ## File Structure
 
-All Ralph files are organized in `.ralph/` directory to keep project root clean!
+All Nelson files are organized in `.nelson/` directory to keep project root clean!
 
 ### After Scaffolding (Both Modes)
 
 ```
 project/
-├── .gitignore            # With Ralph ignore entries
-├── .ralph/               # All Ralph files here
-│   ├── ralph.sh          # Snarktank loop
+├── .gitignore            # With Nelson ignore entries
+├── .nelson/               # All Nelson files here
+│   ├── nelson.sh          # Toro loop
 │   ├── CLAUDE.md         # Claude instructions
 │   ├── prd.json          # User stories
 │   ├── loop.sh           # Plan/build loop
@@ -291,7 +329,7 @@ project/
 │   ├── PROMPT_build.md   # Build instructions
 │   ├── @IMPLEMENTATION_PLAN.md  # Task tracking
 │   ├── AGENTS.md         # Project guide
-│   ├── ralph-status.sh   # Monitoring dashboard
+│   ├── nelson-status.sh   # Monitoring dashboard
 │   ├── progress.txt      # Iteration log (auto-created)
 │   └── archive/          # Previous runs (auto-created)
 ├── specs/                # Specifications (create this)
@@ -300,11 +338,11 @@ project/
 
 ## Best Practices
 
-### 1. Always Monitor Ralph
+### 1. Always Monitor Nelson
 
-Run `ralph-status --watch` in a separate terminal to:
-- See what task Ralph is working on
-- Detect if Ralph is stuck
+Run `nelson-status --watch` in a separate terminal to:
+- See what task Nelson is working on
+- Detect if Nelson is stuck
 - Monitor file changes
 - Track progress
 
@@ -326,33 +364,33 @@ Bad:
 
 ### 3. Keep AGENTS.md Updated
 
-When Ralph discovers how to:
+When Nelson discovers how to:
 - Run tests
 - Start dev server
 - Fix common errors
 
-Add it to `.ralph/AGENTS.md`!
+Add it to `.nelson/AGENTS.md`!
 
 ### 4. Use Meaningful Commits
 
-Ralph auto-commits. Review commit messages in your prompts.
+Nelson auto-commits. Review commit messages in your prompts.
 
 ### 5. Monitor Progress
 
-- Snarktank: Check `.ralph/progress.txt`
-- Plan/Build: Check `.ralph/@IMPLEMENTATION_PLAN.md`
-- Both: Use `ralph-status --watch`!
+- Toro: Check `.nelson/progress.txt`
+- Plan/Build: Check `.nelson/@IMPLEMENTATION_PLAN.md`
+- Both: Use `nelson-status --watch`!
 
 ## Troubleshooting
 
-### Ralph keeps failing the same task
+### Nelson keeps failing the same task
 
 1. Check acceptance criteria - are they specific enough?
-2. Review `.ralph/progress.txt` or `.ralph/@IMPLEMENTATION_PLAN.md`
-3. Add learnings to `.ralph/AGENTS.md`
+2. Review `.nelson/progress.txt` or `.nelson/@IMPLEMENTATION_PLAN.md`
+3. Add learnings to `.nelson/AGENTS.md`
 4. Make criteria more explicit
 
-### Ralph implements placeholders
+### Nelson implements placeholders
 
 Add to acceptance criteria:
 ```
@@ -362,46 +400,46 @@ Add to acceptance criteria:
 
 ### Tests keep failing
 
-1. Ensure `.ralph/AGENTS.md` has correct test command
+1. Ensure `.nelson/AGENTS.md` has correct test command
 2. Add to acceptance criteria: "All tests pass"
 3. Consider breaking into smaller stories
 
-### Ralph doesn't commit
+### Nelson doesn't commit
 
 1. Check git is initialized
 2. Verify branch exists
 3. Check git credentials
 
-### Can't see what Ralph is doing
+### Can't see what Nelson is doing
 
-**This is normal!** Ralph runs in `--print` mode which buffers output.
+**This is normal!** Nelson runs in `--print` mode which buffers output.
 
-**Solution**: Use `ralph-status --watch` to monitor progress in real-time.
+**Solution**: Use `nelson-status --watch` to monitor progress in real-time.
 
-### Ralph appears stuck
+### Nelson appears stuck
 
-Check `ralph-status` for:
+Check `nelson-status` for:
 - "⚠ No commits in X minutes" warning
 - Last file modification time
 - Claude CPU usage (should be >0%)
 
 If truly stuck:
-1. Kill Ralph (Ctrl+C)
-2. Review `.ralph/progress.txt` for errors
-3. Update `.ralph/AGENTS.md` or `.ralph/CLAUDE.md` with fixes
+1. Kill Nelson (Ctrl+C)
+2. Review `.nelson/progress.txt` for errors
+3. Update `.nelson/AGENTS.md` or `.nelson/CLAUDE.md` with fixes
 4. Restart
 
-## Integration with ralph-loop Plugin
+## Integration with nelson-loop Plugin
 
-The `/ralph-loop` command runs in your current session:
+The `/nelson-loop` command runs in your current session:
 
 ```bash
 # In current session (interactive)
-/ralph-loop "Implement feature X" --max-iterations 20
+/nelson-loop "Implement feature X" --max-iterations 20
 
 # External loop (spawns fresh instances)
-.ralph/ralph.sh --tool claude 10
-.ralph/loop.sh 20
+.nelson/nelson.sh --tool claude 10
+.nelson/loop.sh 20
 ```
 
 Both approaches are valid! Choose based on your needs:
@@ -412,50 +450,74 @@ Both approaches are valid! Choose based on your needs:
 
 ```bash
 # Setup
-ralph-scaffold both .                  # Scaffold project
+nelson-scaffold both .                  # Scaffold project
 
 # PRD Generation
-ralph-prd-generator                    # Interactive PRD creation
-ralph-prd-agent                        # Conversational PRD creation
+nelson-prd-generator                    # Interactive PRD creation
+nelson-prd-agent                        # Conversational PRD creation
 
 # Monitoring
-ralph-status                           # One-shot view
-ralph-status --watch                   # Auto-refresh (2s)
-ralph-status --watch 10                # Custom interval
+nelson-status                           # One-shot view
+nelson-status --watch                   # Auto-refresh (2s)
+nelson-status --watch 10                # Custom interval
 
-# Running Ralph
-.ralph/ralph.sh --tool claude 10       # Snarktank mode
-.ralph/loop.sh plan                    # Planning phase
-.ralph/loop.sh 20                      # Build phase
+# Running Nelson
+.nelson/nelson.sh --tool claude 10       # Toro mode
+.nelson/loop.sh plan                    # Planning phase
+.nelson/loop.sh 20                      # Build phase
 
 # In-session
-/ralph-loop "Task" --max-iterations 15
+/nelson-loop "Task" --max-iterations 15
 ```
 
 ## Documentation Files
 
 ```bash
 # Quick reference
-cat ~/.ralph-templates/QUICK_START.md
+cat ~/.nelson-templates/QUICK_START.md
 
 # Full documentation
-cat ~/.ralph-templates/README.md
+cat ~/.nelson-templates/README.md
 
 # All commands
-cat ~/.ralph-templates/COMMANDS.md
+cat ~/.nelson-templates/COMMANDS.md
 
 # PRD generator guide
-cat ~/.ralph-templates/PRD_GENERATOR_PROMPT.md
+cat ~/.nelson-templates/PRD_GENERATOR_PROMPT.md
 ```
 
-## Learn More
+## Credits
 
-- Original technique: https://ghuntley.com/ralph/
-- Snarktank repo: https://github.com/snarktank/ralph
-- Ralph Orchestrator: https://github.com/mikeyobrien/ralph-orchestrator
+Nelson Loop Framework is built upon and inspired by the original Ralph Wiggum technique and implementations.
+
+### Original Authors
+
+- **Geoffrey Huntley** ([@ghuntley](https://github.com/ghuntley))
+  - Original Ralph Wiggum technique
+  - Repository: https://github.com/ghuntley/how-to-ralph-wiggum
+  - Blog: https://ghuntley.com/ralph/
+
+- **Snarktank Ralph** ([@snarktank](https://github.com/snarktank))
+  - PRD-based implementation
+  - Repository: https://github.com/snarktank/ralph
+
+- **Mike O'Brien** ([@mikeyobrien](https://github.com/mikeyobrien))
+  - Ralph Orchestrator
+  - Repository: https://github.com/mikeyobrien/ralph-orchestrator
+
+### What Nelson Adds
+
+- **Quality Assurance Layer** - "Nelson Punch Ralph" aggressive review agent
+- **Dual Modes** - Toro (PRD-based) + Plan/Build modes
+- **Real-time Monitoring** - nelson-status dashboard
+- **Interactive Generators** - PRD and specs generators
+- **Compacting** - Context management after each story
+- **Organized Structure** - All files in `.nelson/` directory
+
+Special thanks to the Ralph Loop community for pioneering autonomous AI development patterns.
 
 ---
 
-**Happy Ralph-ing!** 🎉
+Now go throw punches. 🥊
 
-Remember: Use `ralph-status --watch` to monitor progress!
+Remember: Use `nelson-status --watch` to monitor progress.
